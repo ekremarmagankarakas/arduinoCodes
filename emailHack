@@ -1,0 +1,65 @@
+/* To reduce the library compiled size and limit its memory usage, you
+  can specify which shields you want to include in your sketch by
+  defining CUSTOM_SETTINGS and the shields respective INCLUDE_ define. */
+
+#define CUSTOM_SETTINGS
+#define INCLUDE_BARCODE_SCANNER_SHIELD
+
+#define CUSTOM_SETTINGS
+#define INCLUDE_EMAIL_SHIELD
+#define INCLUDE_PUSH_BUTTON_SHIELD
+
+/* Include 1Sheeld library. */
+#include <OneSheeld.h>
+int partiA = 0;
+int partiB = 0;
+int partiC = 0;
+String partiastring;
+String partibstring;
+String particstring;
+void setup() {
+  /* Start communication. */
+
+  OneSheeld.begin();
+  pinMode(13, OUTPUT);
+ 
+}
+void loop() {
+  if (BarcodeScanner.isNewBarcodeScanned())
+  {
+    // Check if the data in the scanned barcode is Turn On
+    if (!strcmp("A Partisi", BarcodeScanner.getData()))
+    {
+      // Turn on the LED
+      digitalWrite(13, HIGH);
+      delay(2000);
+      digitalWrite(13, LOW);
+      partiA = partiA + 1;
+      partiastring = String(partiA);
+     
+      
+    }
+      if (!strcmp("B Partisi", BarcodeScanner.getData()))
+    {
+      // Turn on the LED
+      digitalWrite(13, HIGH);
+      delay(2000);
+      digitalWrite(13, LOW);
+      partiB = partiB + 1;
+      partibstring = String(partiB);
+    }
+      if (!strcmp("C Partisi", BarcodeScanner.getData()))
+    {
+      // Turn on the LED
+      digitalWrite(13, HIGH);
+      delay(2000);
+      digitalWrite(13, LOW);
+      partiC = partiC + 1;
+      particstring = String(partiC);
+    }
+  }
+   Email.send("ekremarmagankarakas@gmail.com","... nolu sandık A partisi",partiastring);
+    Email.send("ekremarmagankarakas@gmail.com","... nolu sandık B partisi",partibstring);
+     Email.send("ekremarmagankarakas@gmail.com","... nolu sandık C partisi",particstring);
+delay(1000);
+}
